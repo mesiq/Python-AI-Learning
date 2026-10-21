@@ -4,11 +4,12 @@ import dotenv
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 from google import genai
-from google.genai import types 
+from google.genai import types
 
 dotenv.load_dotenv()
 client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
 
+GEMINI_AI_MODEL = "gemini-3.5-flash-lite"
 OPEN_METEO_MODELS = {
     "Best match": "best_match",
     "ECMWF IFS 0.25°": "ecmwf_ifs025",
@@ -69,7 +70,7 @@ def choose_action(text):
         'User message: ' + text
     )
     response = client.models.generate_content(
-        model="gemini-3.5-flash-lite",
+        model=GEMINI_AI_MODEL,
         contents=prompt,
         config=types.GenerateContentConfig(
             response_mime_type="application/json",
